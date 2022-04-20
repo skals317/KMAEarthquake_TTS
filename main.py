@@ -1,13 +1,14 @@
-from requests import get
+from requests import get  # to make GET request
 from bs4 import BeautifulSoup
 import requests
-import time
- 
+import pyglet
+from playsound import playsound
+import os
 
 def download(url, file_name):
-    with open(file_name, "wb") as file:
-        response = get(url)
-        file.write(response.content)
+    with open(file_name, "wb") as file:   # open in binary mode
+        response = get(url)               # get request
+        file.write(response.content)      # write to file
 
 url = 'https://www.weather.go.kr/w/eqk-vol/search/korea.do?dpType=a'
           
@@ -40,7 +41,7 @@ if response.status_code == 200:
           print("최대진도 : "+maxint)
           print("발생지역"+area)
           print("지도 : "+map)
-          ttsdabon = (f"한국에서 {miso}지진정보를 수신하였습니다. {time}에 {area}에서 규모,{mag}의 지진이 발생하였습니다. 깊이는 {dep}km이며, 최대진도는{maxint}입니다.")
+          ttsdabon = (f"한국에서 {miso}지진정보를 수신하였습니다. {time}에 {area}에서 규모,{mag}의 지진이 발생하였습니다.깊이는 {dep}km이며, 최대진도는{maxint},입니다.")
           tts = 'https://playentry.org/api/expansionBlock/tts/read.mp3?text='+ttsdabon+'&speed=0&pitch=0&speaker=hana&volume=1'
           print(tts)  
 else:
@@ -49,3 +50,5 @@ else:
 if __name__ == '__main__':
 	url = tts
 	download(url,"tts.mp3")
+
+playsound(os.getcwd()+'\\tts.mp3')
