@@ -1,7 +1,6 @@
 from requests import get  # to make GET request
 from bs4 import BeautifulSoup
 import requests
-import pyglet
 from playsound import playsound
 import os
 
